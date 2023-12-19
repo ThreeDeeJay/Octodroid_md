@@ -18,6 +18,13 @@ jobs:
           distribution: 'adopt'
           java-version: '17'
 
+      - name: Setup client
+        env:
+          CLIENT_INFO: ${{ secrets.CLIENT_INFO }}
+        run: |
+          echo -e "${CLIENT_INFO}" > client.properties
+        shell: bash
+
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
         shell: bash
