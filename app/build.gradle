@@ -39,6 +39,10 @@ android {
         buildConfigField 'String', 'CLIENT_SECRET', ClientSecret
     }
 
+    buildFeatures {
+        buildConfig true
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
