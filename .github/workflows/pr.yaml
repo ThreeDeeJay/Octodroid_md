@@ -1,7 +1,7 @@
 name: CI
 on:
     pull_request:
-        branches: [md3]
+        branches: [dev]
 
 jobs:
     build:
@@ -34,5 +34,5 @@ jobs:
               shell: bash
 
             - name: Build
-              run: ./gradlew clean assembleRelease
+              run: ./gradlew clean assembleDebug
               shell: bash

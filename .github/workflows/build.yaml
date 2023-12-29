@@ -1,7 +1,7 @@
 name: CI
 on:
     push:
-        branches: [md3]
+        branches: [dev]
 
 jobs:
     build:
@@ -34,21 +34,21 @@ jobs:
               shell: bash
 
             - name: Build
-              run: ./gradlew clean assembleRelease
+              run: ./gradlew clean assembleDebug
               shell: bash
 
             - name: Fetch public keystore
               run: wget https://github.com/tytydraco/public-keystore/raw/main/public.jks
               shell: bash
 
-            - name: Sign release APK
+            - name: Sign APK
               run: |
                   apksigner="$(find $ANDROID_SDK_ROOT/build-tools -name apksigner | sort -r | head -n 1)"
-                  "$apksigner" sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./app/build/outputs/apk/release/app-release-unsigned.apk --out ./app/build/outputs/apk/release/app-release.apk
+                  "$apksigner" sign --ks public.jks --ks-key-alias public --ks-pass pass:public --key-pass pass:public --in ./app/build/outputs/apk/debug/app-debug.apk --out ./app/build/outputs/apk/debug/app-debug.apk
               shell: bash
 
-            - name: Upload signed release APK
+            - name: Upload APK
               uses: actions/upload-artifact@v4
               with:
-                  name: gh4a-release
-                  path: ./app/build/outputs/apk/release/app-release.apk
+                  name: gh4a-debug
+                  path: ./app/build/outputs/apk/debug/app-debug.apk
