@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
     android:fillViewport="true">
 
     <LinearLayout
@@ -15,21 +16,12 @@
         android:paddingLeft="@dimen/content_padding"
         android:paddingRight="@dimen/content_padding">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:scaleType="fitCenter"
-                android:layout_gravity="bottom|center"
-                app:tint="?attr/colorPrimary"
-                android:src="@drawable/octodroid_bg" />
-
-        </FrameLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/octodroid_bg" />
 
         <LinearLayout
             android:id="@+id/welcome_container"
@@ -48,15 +40,18 @@
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="@string/introduction"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@android:color/white" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="4dp"
                 android:padding="8dp"
-                android:text="@string/login" />
+                android:text="@string/login"
+                android:textColor="?attr/colorPrimary"
+                app:backgroundTint="@android:color/white" />
 
         </LinearLayout>
 
@@ -75,7 +70,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/authenticating"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@android:color/white" />
 
             <ProgressBar
                 android:id="@+id/login_progress"
@@ -85,6 +81,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:indeterminate="true"
+                android:indeterminateTint="@android:color/white"
                 android:visibility="visible" />
 
         </LinearLayout>

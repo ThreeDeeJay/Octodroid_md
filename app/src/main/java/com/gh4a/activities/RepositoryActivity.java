@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.core.util.Pair;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,7 +34,6 @@ import com.gh4a.utils.ApiHelpers;
 import com.gh4a.utils.DownloadUtils;
 import com.gh4a.utils.IntentUtils;
 import com.gh4a.utils.RxUtils;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.meisolsson.githubsdk.model.Branch;
 import com.meisolsson.githubsdk.model.Commit;
 import com.meisolsson.githubsdk.model.Repository;
@@ -436,7 +436,7 @@ public class RepositoryActivity extends BaseFragmentPagerActivity implements
             }
 
             final RepositoryActivity activity = (RepositoryActivity) getActivity();
-            return new MaterialAlertDialogBuilder(activity)
+            return new AlertDialog.Builder(activity)
                     .setCancelable(true)
                     .setTitle(R.string.repo_select_ref_dialog_title)
                     .setSingleChoiceItems(adapter, current, (dialog, which) -> {

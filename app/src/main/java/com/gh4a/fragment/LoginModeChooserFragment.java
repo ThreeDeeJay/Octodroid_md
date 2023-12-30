@@ -22,7 +22,6 @@ import com.gh4a.ServiceFactory;
 import com.gh4a.utils.ApiHelpers;
 import com.gh4a.utils.IntentUtils;
 import com.gh4a.utils.RxUtils;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.meisolsson.githubsdk.model.User;
@@ -99,7 +98,7 @@ public class LoginModeChooserFragment extends DialogFragment implements
         TextView oauthHint = view.findViewById(R.id.oauth_hint);
         replaceURLSpansIfNeeded(oauthHint.getText());
 
-        return new MaterialAlertDialogBuilder(getActivity())
+        return new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setPositiveButton(R.string.login, null) // will be assigned later
                 .setNegativeButton(R.string.cancel, (dialog, which) -> dialog.cancel())

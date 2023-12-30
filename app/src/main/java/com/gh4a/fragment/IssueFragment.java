@@ -37,6 +37,7 @@ public class IssueFragment extends IssueFragmentBase {
 
     public void updateState(Issue issue) {
         mIssue = mIssue.toBuilder().state(issue.state()).build();
+        assignHighlightColor();
         reloadEvents(false);
     }
 
@@ -48,6 +49,15 @@ public class IssueFragment extends IssueFragmentBase {
             tvPull.setOnClickListener(this);
         } else {
             tvPull.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void assignHighlightColor() {
+        if (mIssue.state() == IssueState.Closed) {
+            setHighlightColors(R.attr.colorIssueClosed, R.attr.colorIssueClosedDark);
+        } else {
+            setHighlightColors(R.attr.colorIssueOpen, R.attr.colorIssueOpenDark);
         }
     }
 
@@ -90,7 +100,7 @@ public class IssueFragment extends IssueFragmentBase {
     @Override
     public void editComment(GitHubCommentBase comment) {
         @AttrRes int highlightColorAttr = mIssue.state() == IssueState.Closed
-                ? R.attr.colorPrimary : R.attr.colorSecondary;
+                ? R.attr.colorIssueClosed : R.attr.colorIssueOpen;
         Intent intent = EditIssueCommentActivity.makeIntent(getActivity(), mRepoOwner, mRepoName,
                 mIssue.number(), comment.id(), comment.body(), highlightColorAttr);
         mEditLauncher.launch(intent);

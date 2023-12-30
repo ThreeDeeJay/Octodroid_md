@@ -274,6 +274,12 @@ public abstract class IssueFragmentBase extends ListDataBaseFragment<TimelineIte
     }
 
     @Override
+    protected void setHighlightColors(int colorAttrId, int statusBarColorAttrId) {
+        super.setHighlightColors(colorAttrId, statusBarColorAttrId);
+        mBottomSheet.setHighlightColor(colorAttrId);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.issue_fragment_menu, menu);
@@ -467,6 +473,7 @@ public abstract class IssueFragmentBase extends ListDataBaseFragment<TimelineIte
         reactions.setDetailsCache(mReactionDetailsCache);
         reactions.setReactions(mIssue.reactions());
 
+        assignHighlightColor();
         bindSpecialViews(mListHeaderView);
     }
 
@@ -637,6 +644,7 @@ public abstract class IssueFragmentBase extends ListDataBaseFragment<TimelineIte
     }
 
     protected abstract void bindSpecialViews(View headerView);
+    protected abstract void assignHighlightColor();
     protected abstract Single<Response<Void>> doDeleteComment(GitHubCommentBase comment);
 
     private void handleDeleteComment(GitHubCommentBase comment) {

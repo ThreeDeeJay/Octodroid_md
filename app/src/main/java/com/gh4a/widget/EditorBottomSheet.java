@@ -389,7 +389,7 @@ public class EditorBottomSheet extends FrameLayout implements View.OnClickListen
             mBasicEditor.setSelection(mBasicEditor.getText().length());
         }
 
-        mAdvancedEditorToggle.setRotationX(visible ? 0f : 180f);
+        mAdvancedEditorToggle.setImageResource(visible ? R.drawable.collapse : R.drawable.expand);
         updateSendButtonState();
 
         if (mListener != null) {

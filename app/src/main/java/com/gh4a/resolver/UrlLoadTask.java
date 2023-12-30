@@ -25,6 +25,8 @@ public abstract class UrlLoadTask extends AsyncTask<Void, Void, Optional<Intent>
     private int mIntentFlags;
     private Runnable mCompletionCallback;
     private boolean mUseCustomTabForUnresolvedUri = false;
+    private int mCustomTabHeaderColor;
+
     public UrlLoadTask(FragmentActivity activity, Uri urlToResolve) {
         super();
         mActivity = activity;
@@ -35,8 +37,9 @@ public abstract class UrlLoadTask extends AsyncTask<Void, Void, Optional<Intent>
         mIntentFlags = flags;
     }
 
-    public void setOpenUnresolvedUriInCustomTab() {
+    public void setOpenUnresolvedUriInCustomTab(int headerColor) {
         mUseCustomTabForUnresolvedUri = true;
+        mCustomTabHeaderColor = headerColor;
     }
 
     /**
@@ -72,7 +75,7 @@ public abstract class UrlLoadTask extends AsyncTask<Void, Void, Optional<Intent>
         if (result.isPresent()) {
             mActivity.startActivity(result.get().setFlags(mIntentFlags));
         } else if (mUseCustomTabForUnresolvedUri) {
-            IntentUtils.openInCustomTabOrBrowser(mActivity, mUrlToResolve);
+            IntentUtils.openInCustomTabOrBrowser(mActivity, mUrlToResolve, mCustomTabHeaderColor);
         } else {
             IntentUtils.launchBrowser(mActivity, mUrlToResolve, mIntentFlags);
         }

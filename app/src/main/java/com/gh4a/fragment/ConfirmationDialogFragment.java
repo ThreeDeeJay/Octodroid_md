@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.appcompat.app.AlertDialog;
 
 import com.gh4a.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ConfirmationDialogFragment extends DialogFragment implements
         DialogInterface.OnClickListener {
@@ -87,7 +86,7 @@ public class ConfirmationDialogFragment extends DialogFragment implements
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle args = getArguments();
-        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getContext())
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
                 .setMessage(args.getString("text"))
                 .setNegativeButton(R.string.cancel, null)
                 .setPositiveButton(args.getInt("confirmButtonTextResId"), this);

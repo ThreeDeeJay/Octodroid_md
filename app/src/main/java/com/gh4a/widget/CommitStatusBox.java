@@ -170,7 +170,8 @@ public class CommitStatusBox extends LinearLayoutCompat implements View.OnClickL
             case R.id.row_commit_status:
                 StatusWrapper status = (StatusWrapper) v.getTag();
                 BaseActivity activity = (BaseActivity) getContext();
-                IntentUtils.openInCustomTabOrBrowser(activity, Uri.parse(status.targetUrl()));
+                IntentUtils.openInCustomTabOrBrowser(activity,
+                        Uri.parse(status.targetUrl()), activity.getCurrentHeaderColor());
                 break;
             case R.id.commit_status_header:
                 setStatusesExpanded(mStatusContainer.getVisibility() != View.VISIBLE);
