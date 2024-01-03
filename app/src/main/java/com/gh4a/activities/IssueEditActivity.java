@@ -31,15 +31,15 @@ import androidx.annotation.Nullable;
 import com.gh4a.utils.ActivityResultHelpers;
 import com.google.android.material.appbar.AppBarLayout;
 
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.ContextCompat;
 import androidx.core.util.ObjectsCompat;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.appcompat.app.AlertDialog;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -185,8 +185,7 @@ public class IssueEditActivity extends BasePagerActivity implements
             return;
         }
 
-        LayoutInflater headerInflater =
-                LayoutInflater.from(new ContextThemeWrapper(this, R.style.HeaderTheme));
+        LayoutInflater headerInflater = LayoutInflater.from(this);
         View header = headerInflater.inflate(R.layout.issue_create_header, null);
         addHeaderView(header, false);
 
@@ -805,7 +804,7 @@ public class IssueEditActivity extends BasePagerActivity implements
             Bundle args = getArguments();
             mTemplates = args.getParcelableArrayList("templates");
 
-            return new AlertDialog.Builder(getContext())
+            return new MaterialAlertDialogBuilder(getContext())
                     .setTitle(R.string.issue_template_dialog_title)
                     .setSingleChoiceItems(new Adapter(getContext(), mTemplates), -1, this)
                     .setOnCancelListener(this)
@@ -918,7 +917,7 @@ public class IssueEditActivity extends BasePagerActivity implements
                 dialog.dismiss();
             };
 
-            return new AlertDialog.Builder(activity)
+            return new MaterialAlertDialogBuilder(activity)
                     .setCancelable(true)
                     .setTitle(R.string.issue_milestone_hint)
                     .setSingleChoiceItems(milestones, selected, selectCb)
@@ -976,7 +975,7 @@ public class IssueEditActivity extends BasePagerActivity implements
                 dialog.dismiss();
             };
 
-            return new AlertDialog.Builder(activity)
+            return new MaterialAlertDialogBuilder(activity)
                     .setCancelable(true)
                     .setTitle(R.string.issue_assignee_hint)
                     .setMultiChoiceItems(assigneeNames, selection, selectCb)
@@ -1032,7 +1031,7 @@ public class IssueEditActivity extends BasePagerActivity implements
             }
 
             IssueEditActivity activity = (IssueEditActivity) getContext();
-            return new AlertDialog.Builder(activity)
+            return new MaterialAlertDialogBuilder(activity)
                     .setCancelable(true)
                     .setTitle(R.string.issue_labels)
                     .setView(labelContainerView)
