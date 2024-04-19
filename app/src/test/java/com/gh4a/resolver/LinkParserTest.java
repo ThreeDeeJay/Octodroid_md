@@ -21,8 +21,8 @@ import com.gh4a.activities.WikiListActivity;
 import com.gh4a.activities.home.HomeActivity;
 import com.gh4a.utils.IntentUtils;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -40,17 +40,17 @@ import static org.hamcrest.core.Is.is;
 public class LinkParserTest {
     private FragmentActivity mActivity;
 
-    @Before
+    @BeforeEach
     public void createActivity() {
         mActivity = Robolectric.buildActivity(BrowseFilter.class).get();
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void gistLink__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://gist.github.com"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void linkToGist__opensGistActivity() {
         LinkParser.ParseResult result = parseLink("https://gist.github.com/gistId");
         assertRedirectsTo(result, GistActivity.class);
@@ -59,7 +59,7 @@ public class LinkParserTest {
         assertThat("Gist id is incorrect", extras.getString("id"), is("gistId"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void linkToGist_withUserInPath__opensGistActivity() {
         LinkParser.ParseResult result = parseLink("https://gist.github.com/user/gistId");
         assertRedirectsTo(result, GistActivity.class);
@@ -68,32 +68,32 @@ public class LinkParserTest {
         assertThat("Gist id is incorrect", extras.getString("id"), is("gistId"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void githubDotComLink__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void linkToReservedPath__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/settings"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void timelineLink__opensTimelineActivity() {
         assertRedirectsTo(parseLink("https://github.com/timeline"), TimelineActivity.class);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void trendingLink__opensTrendingActivity() {
         assertRedirectsTo(parseLink("https://github.com/trending"), TrendingActivity.class);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void repositoriesLink__opensTrendingActivity() {
         assertRedirectsTo(parseLink("https://github.com/repositories"), TrendingActivity.class);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void starsLink__opensHomeActivity_onBookmarksAndStarsSection() {
         LinkParser.ParseResult result = parseLink("https://github.com/stars");
         assertRedirectsTo(result, HomeActivity.class);
@@ -101,7 +101,7 @@ public class LinkParserTest {
         assertThat("Redirected to wrong HomeActivity section", extras.getString("initial_page"), is("bookmarks"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void gistsLink__opensHomeActivity_onGistsSection() {
         LinkParser.ParseResult result = parseLink("https://github.com/gists");
         assertRedirectsTo(result, HomeActivity.class);
@@ -109,7 +109,7 @@ public class LinkParserTest {
         assertThat("Redirected to wrong HomeActivity section", extras.getString("initial_page"), is("gists"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void notificationsLink__opensHomeActivity_onNotificationsSection() {
         LinkParser.ParseResult result = parseLink("https://github.com/notifications");
         assertRedirectsTo(result, HomeActivity.class);
@@ -117,7 +117,7 @@ public class LinkParserTest {
         assertThat("Redirected to wrong HomeActivity section", extras.getString("initial_page"), is("notifications"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void issuesLink__opensHomeActivity_onMyIssuesSection() {
         LinkParser.ParseResult result = parseLink("https://github.com/issues");
         assertRedirectsTo(result, HomeActivity.class);
@@ -125,7 +125,7 @@ public class LinkParserTest {
         assertThat("Redirected to wrong HomeActivity section", extras.getString("initial_page"), is("issues"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullsLink__opensHomeActivity_onMyPullRequestsSection() {
         LinkParser.ParseResult result = parseLink("https://github.com/pulls");
         assertRedirectsTo(result, HomeActivity.class);
@@ -133,7 +133,7 @@ public class LinkParserTest {
         assertThat("Redirected to wrong HomeActivity section", extras.getString("initial_page"), is("prs"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void dashboardLink__opensHomeActivity_onNewsFeedSection() {
         LinkParser.ParseResult result = parseLink("https://github.com/dashboard");
         assertRedirectsTo(result, HomeActivity.class);
@@ -141,19 +141,19 @@ public class LinkParserTest {
         assertThat("Redirected to wrong HomeActivity section", extras.getString("initial_page"), is("newsfeed"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void blogLink__opensBlogListActivity() {
         assertRedirectsTo(parseLink("https://github.com/blog"), BlogListActivity.class);
         assertRedirectsTo(parseLink("https://blog.github.com"), BlogListActivity.class);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void blogLink_withBlogInPath__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/blog/blog-title"));
         assertRedirectsToBrowser(parseLink("https://blog.github.com/blog-title"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void organizationLink__opensUserActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/orgs/android");
         assertRedirectsTo(result, UserActivity.class);
@@ -162,12 +162,12 @@ public class LinkParserTest {
         assertThat("Organization name is incorrect", extras.getString("login"), is("android"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void organizationLink_withoutName__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/orgs"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void organisationLink_leadingToMembers__opensOrganizationMemberListActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/orgs/android/people");
         assertRedirectsTo(result, OrganizationMemberListActivity.class);
@@ -176,7 +176,7 @@ public class LinkParserTest {
         assertThat("Organization name is incorrect", extras.getString("login"), is("android"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void userLink__opensUserActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan");
         assertRedirectsTo(result, UserActivity.class);
@@ -185,7 +185,7 @@ public class LinkParserTest {
         assertThat("User name is incorrect", extras.getString("login"), is("slapperwan"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void userLink_withRepositoriesTab__loadsUserRepos() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan?tab=repositories");
         UserReposLoadTask loadTask = assertThatLoadTaskIs(result.loadTask, UserReposLoadTask.class);
@@ -193,7 +193,7 @@ public class LinkParserTest {
         assertThat("User name is incorrect", loadTask.mUserLogin, is("slapperwan"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void userLink_withStarsTab__loadsUserStarredRepos() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan?tab=stars");
         UserReposLoadTask loadTask = assertThatLoadTaskIs(result.loadTask, UserReposLoadTask.class);
@@ -201,7 +201,7 @@ public class LinkParserTest {
         assertThat("User name is incorrect", loadTask.mUserLogin, is("slapperwan"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void userLink_withFollowersTab__loadsUserFollowers() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan?tab=followers");
         UserFollowersLoadTask loadTask =
@@ -210,7 +210,7 @@ public class LinkParserTest {
         assertThat("User name is incorrect", loadTask.mUserLogin, is("slapperwan"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void userLink_withFollowingTab__loadsUserFollows() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan?tab=following");
         UserFollowersLoadTask loadTask =
@@ -219,7 +219,7 @@ public class LinkParserTest {
         assertThat("User name is incorrect", loadTask.mUserLogin, is("slapperwan"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void userLink_withUnknownTab__opensUserActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan?tab=unknown");
         assertRedirectsTo(result, UserActivity.class);
@@ -228,7 +228,7 @@ public class LinkParserTest {
         assertThat("User name is incorrect", extras.getString("login"), is("slapperwan"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void repositoryLink__opensRepositoryActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a");
         assertRedirectsTo(result, RepositoryActivity.class);
@@ -242,7 +242,7 @@ public class LinkParserTest {
                 is(RepositoryActivity.PAGE_REPO_OVERVIEW));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void releasesLink__opensReleaseListActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/releases");
         assertRedirectsTo(result, ReleaseListActivity.class);
@@ -252,12 +252,12 @@ public class LinkParserTest {
         assertThat("Repo name is incorrect", extras.getString("repo"), is("gh4a"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void releaseAssetLink__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/releases/download/4.6.7/release.apk"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void releaseLink_withoutTagId__opensReleaseListActivity() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/releases/tag");
@@ -268,7 +268,7 @@ public class LinkParserTest {
         assertThat("Repo name is incorrect", extras.getString("repo"), is("gh4a"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void releaseLink_withTagId__loadsRelease() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/releases/tag/tagName");
@@ -278,7 +278,7 @@ public class LinkParserTest {
         assertThat("Tag name is incorrect", loadTask.mTagName, is("tagName"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void issuesLink__opensIssueListActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/issues");
         assertRedirectsTo(result, IssueListActivity.class);
@@ -289,7 +289,7 @@ public class LinkParserTest {
         assertThat("Issue type is pull request", extras.getBoolean("is_pull_request"), is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void newIssueLink__opensIssueEditActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/issues/new");
         assertRedirectsTo(result, IssueEditActivity.class);
@@ -300,7 +300,7 @@ public class LinkParserTest {
         assertThat("Issue to edit is set", extras.getParcelable("issue"), is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void issueLink__opensIssueActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/issues/42");
         assertRedirectsTo(result, IssueActivity.class);
@@ -312,13 +312,13 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void issueLink_withIncorrectNumber__opensBrowser() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/issues/34no");
         assertRedirectsToBrowser(result);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void issueLink_withCommentMarker__opensIssueActivity_andHasCommentMarker()
             {
         LinkParser.ParseResult result =
@@ -334,7 +334,7 @@ public class LinkParserTest {
         assertThat("Comment id is incorrect", commentMarker.commentId, is(1234L));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void issueLink_withIncorrectCommentMarker_opensIssueActivity() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/issues/42#issuecomment-A3");
@@ -347,7 +347,7 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestsLink__opensIssueListActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/pulls");
         assertRedirectsTo(result, IssueListActivity.class);
@@ -359,7 +359,7 @@ public class LinkParserTest {
                 is(true));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void wikiLink__opensWikiListActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/wiki");
         assertRedirectsTo(result, WikiListActivity.class);
@@ -370,25 +370,25 @@ public class LinkParserTest {
         assertThat("Initial page is set", extras.getString("initial_page"), is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void wikiLink_toSpecificPage__opensBrowser() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/wiki/Information-hierarchy");
         assertRedirectsToBrowser(result);
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withoutId__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/pull"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withInvalidId__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/pull/-1"));
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/pull/fwbi"));
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/pull/0"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink__opensPullRequestActivity() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/pull/12");
         assertRedirectsTo(result, PullRequestActivity.class);
@@ -402,7 +402,7 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withCommentMarker__opensPullRequestActivity_andHasCommentMarker() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/14#issuecomment-7546");
@@ -418,7 +418,7 @@ public class LinkParserTest {
         assertThat("Comment id is incorrect", commentMarker.commentId, is(7546L));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withCommitsPage__opensPullRequestCommits() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/23/commits");
@@ -434,7 +434,7 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withFilesPage__opensPullRequestFiles() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/23/files");
@@ -450,7 +450,7 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withUnknownPage__opensPullRequest() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/23/unknown");
@@ -465,7 +465,7 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withDiffMarker__loadsDiff() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665/files" +
@@ -483,7 +483,7 @@ public class LinkParserTest {
         assertThat("Is right line", diffId.right, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withDiffMarker_andLeftNumber__loadsDiff() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665/files" +
@@ -501,7 +501,7 @@ public class LinkParserTest {
         assertThat("Is right line", diffId.right, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withDiffMarker_andLineRange__loadsDiff() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665/files" +
@@ -519,7 +519,7 @@ public class LinkParserTest {
         assertThat("Is right line", diffId.right, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withDiffMarker_andInvalidNumber__opensPullRequest() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665/files" +
@@ -554,7 +554,7 @@ public class LinkParserTest {
         assertThat("Is not right line", diffId.right, is(true));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestLink_withDiffMarker_andIncorrectHash__loadsDiff() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665/files" +
@@ -571,7 +571,7 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestReviewLink__loadsReview() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665#pullrequestreview-59822171");
@@ -584,7 +584,7 @@ public class LinkParserTest {
         assertThat("Comment id is incorrect", loadTask.mMarker.commentId, is(59822171L));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestReviewCommentLink__loadsReviewComment() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665#discussion_r136306029");
@@ -597,7 +597,7 @@ public class LinkParserTest {
         assertThat("Comment id is incorrect", loadTask.mMarker.commentId, is(136306029L));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestReviewDiffLink__loadsReviewDiff() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/pull/665" +
                 "#discussion-diff-136304421R590");
@@ -613,7 +613,7 @@ public class LinkParserTest {
         assertThat("Is left line", loadTask.mDiffId.right, is(true));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void pullRequestDiffCommentLink__loadsReviewDiff() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/pull/665/files#r136306029");
@@ -627,7 +627,7 @@ public class LinkParserTest {
         assertThat("Comment id is incorrect", loadTask.mMarker.commentId, is(136306029L));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitLink__opensCommitActivity() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/commit/commitSha");
@@ -642,12 +642,12 @@ public class LinkParserTest {
                 is(nullValue()));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitLink_withoutCommitSha__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/commit"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitLink_withDiffMarker__loadsCommitDiff() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/commit/" +
@@ -668,7 +668,7 @@ public class LinkParserTest {
         assertThat("Is right line", diffId.right, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitLink_withCommentMarker__opensCommitActivity() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/commit/commitSha#commitcomment-12");
@@ -682,7 +682,7 @@ public class LinkParserTest {
         assertThat("Comment id is incorrect", commentMarker.commentId, is(12L));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitsLink__handlesRefAndPath_andRedirectsToCommitsPage() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/commits");
         RefPathDisambiguationTask loadTask =
@@ -696,7 +696,7 @@ public class LinkParserTest {
         assertThat("Goes to file viewer", loadTask.mGoToFileViewer, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitsLink_withBranch__handlesRefAndPath_andRedirectsToCommitsPage() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/commits/master");
@@ -711,7 +711,7 @@ public class LinkParserTest {
         assertThat("Goes to file viewer", loadTask.mGoToFileViewer, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void commitsLink_withRefsHeads__handlesRefAndPath_andRedirectsToCommitsPage() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/commits/refs/heads/master");
@@ -726,7 +726,7 @@ public class LinkParserTest {
         assertThat("Goes to file viewer", loadTask.mGoToFileViewer, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void treeLink__handlesRefAndPath_andRedirectsToFilesPage() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/tree");
         RefPathDisambiguationTask loadTask =
@@ -740,7 +740,7 @@ public class LinkParserTest {
         assertThat("Goes to file viewer", loadTask.mGoToFileViewer, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void treeLink_withBranch__handlesRefAndPath_andRedirectsToFilesPage() {
         LinkParser.ParseResult result = parseLink("https://github.com/slapperwan/gh4a/tree/master");
         RefPathDisambiguationTask loadTask =
@@ -769,7 +769,7 @@ public class LinkParserTest {
         assertThat("Goes to file viewer", loadTask.mGoToFileViewer, is(false));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void blobLink__handlesRefAndPath_andRedirectsToFileViewer() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/blob/master/README.md");
@@ -783,7 +783,7 @@ public class LinkParserTest {
         assertThat("Does not go to file viewer", loadTask.mGoToFileViewer, is(true));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void blobLink_withLineMarker__handlesRefAndPath_andRedirectsToFileViewer() {
         LinkParser.ParseResult result =
                 parseLink("https://github.com/slapperwan/gh4a/blob/master/build.gradle#L10");
@@ -797,12 +797,12 @@ public class LinkParserTest {
         assertThat("Does not go to file viewer", loadTask.mGoToFileViewer, is(true));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void blobLink_withoutBranchAndPath__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/blob"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void compareLink_withoutRefs__opensBrowser() {
         LinkParser.ParseResult result =
                 (parseLink("https://github.com/slapperwan/gh4a/compare/v4.2.0...v4.2.1"));
@@ -816,17 +816,17 @@ public class LinkParserTest {
         assertThat("Head ref is incorrect", extras.getString("head"), is("v4.2.1"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void compareLink_withIncompleteRefs__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/compare/v4.2.0..."));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void unknownRepositoryLink__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://github.com/slapperwan/gh4a/unknown"));
     }
 
-    @Test
+    @org.junit.jupiter.api.Test
     public void nonGitHubDotComLink__opensBrowser() {
         assertRedirectsToBrowser(parseLink("https://user-images.githubusercontent.com/30041551/an_image.png"));
     }
